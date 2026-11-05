@@ -55,7 +55,7 @@
 /* Tamanho base fluido: grande no celular, diminui suavemente
    conforme a tela cresce (112,5% no celular → 100% no desktop). */
 html {
-    font-size: clamp(100%, 116.7% - 1.157vw, 112.5%);
+    font-size: 112.5%;
     scroll-behavior: smooth;
     scroll-padding-top: calc(var(--altura-menu) + 1rem);
     -webkit-text-size-adjust: 100%;
@@ -93,10 +93,10 @@ header {
 }
 
 nav {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
     gap: 0.2rem;
     padding: 0.15rem 2%;
 }
@@ -111,7 +111,10 @@ nav a {
     font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0.01em;
+    line-height: 1.2;
+    text-align: center;
     padding: 0 0.7rem;
+    text-wrap: balance;
     border-radius: 50vmax;
     transition: color 0.3s ease, background 0.3s ease;
 }
@@ -218,6 +221,7 @@ main#home p {
 .secao-tema {
     position: relative;
     padding: var(--espaco-secao) var(--lateral);
+    scroll-margin-top: 5rem;
 }
 
 /* Tema 1 — fundo claro */
@@ -400,6 +404,10 @@ footer p {
    Só refinamentos de estilo; os tamanhos já são fluidos.
    ========================================================== */
 @media (min-width: 37.5em) {
+    html {
+        font-size: 106.25%;
+    }
+
     header {
         background: rgba(20, 13, 9, 0.88);
         backdrop-filter: blur(0.75rem);
@@ -407,6 +415,7 @@ footer p {
     }
 
     nav {
+        display: flex;
         gap: 0.5rem;
     }
 
@@ -422,6 +431,10 @@ footer p {
    TELAS GRANDES (a partir de 60em ≈ desktop)
    ========================================================== */
 @media (min-width: 60em) {
+    html {
+        font-size: 100%;
+    }
+
     :root {
         --lateral: 8vw;
     }
