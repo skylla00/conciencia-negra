@@ -1,8 +1,10 @@
 /* ==========================================================
    CONSCIÊNCIA NEGRA — Estilo Afro-brasileiro moderno
-   MOBILE FIRST: o estilo base é o do celular (tudo grande,
-   fácil de ler e de tocar). Tablet e desktop recebem ajustes
-   com @media (min-width), reduzindo e organizando o conteúdo.
+   MOBILE FIRST + LAYOUT FLUIDO
+   Nenhuma medida em pixels: tudo usa %, vw, vh, rem e em.
+   O tamanho base (html) se ajusta sozinho à largura da tela,
+   e como todo o resto é proporcional a ele, o site se adapta
+   a qualquer dispositivo automaticamente.
    ========================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Poppins:wght@300;400;500;600&display=swap');
@@ -35,9 +37,9 @@
         var(--ouro) 83.33% 100%
     );
 
-    /* Medidas do celular (base) */
-    --lateral: 1.4rem;
-    --espaco-secao: 6.5rem;
+    /* Medidas proporcionais à tela */
+    --lateral: 6vw;                               /* margem lateral = 6% da largura */
+    --espaco-secao: clamp(4.5rem, 14vh, 8rem);    /* respiro vertical = 14% da altura */
     --altura-menu: 3.5rem;
 }
 
@@ -50,8 +52,10 @@
     box-sizing: border-box;
 }
 
+/* Tamanho base fluido: grande no celular, diminui suavemente
+   conforme a tela cresce (112,5% no celular → 100% no desktop). */
 html {
-    font-size: 112.5%; /* 18px: base grande para o celular */
+    font-size: clamp(100%, 116.7% - 1.157vw, 112.5%);
     scroll-behavior: smooth;
     scroll-padding-top: calc(var(--altura-menu) + 1rem);
     -webkit-text-size-adjust: 100%;
@@ -73,17 +77,17 @@ body {
 }
 
 :focus-visible {
-    outline: 3px solid var(--ouro);
-    outline-offset: 3px;
+    outline: 0.2rem solid var(--ouro);
+    outline-offset: 0.2rem;
 }
 
-/* ---------- Menu de navegação (compacto, mas fácil de tocar) ---------- */
+/* ---------- Menu de navegação (compacto, fácil de tocar) ---------- */
 header {
     position: sticky;
     top: 0;
     z-index: 100;
     background: rgba(20, 13, 9, 0.97);
-    border-bottom: 3px solid transparent;
+    border-bottom: 0.2rem solid transparent;
     border-image: var(--faixa-kente) 1;
     padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
 }
@@ -94,21 +98,21 @@ nav {
     align-items: center;
     flex-wrap: wrap;
     gap: 0.2rem;
-    padding: 0.2rem 0.5rem;
+    padding: 0.15rem 2%;
 }
 
 nav a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 48px; /* área de toque confortável */
+    min-height: 3rem; /* área de toque confortável */
     color: var(--areia);
     text-decoration: none;
     font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0.01em;
     padding: 0 0.7rem;
-    border-radius: 999px;
+    border-radius: 50vmax;
     transition: color 0.3s ease, background 0.3s ease;
 }
 
@@ -129,7 +133,7 @@ main#home {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 5rem var(--lateral) 6rem;
+    padding: 12vh var(--lateral) 14vh;
     color: var(--creme);
     overflow: hidden;
     background:
@@ -149,22 +153,20 @@ main#home::before {
         linear-gradient(-45deg, var(--ouro) 25%, transparent 25%),
         linear-gradient(45deg, transparent 75%, var(--ouro) 75%),
         linear-gradient(-45deg, transparent 75%, var(--ouro) 75%);
-    background-size: 56px 56px;
-    background-position: 0 0, 0 28px, 28px -28px, -28px 0;
+    background-size: 3.5rem 3.5rem;
+    background-position: 0 0, 0 1.75rem, 1.75rem -1.75rem, -1.75rem 0;
     -webkit-mask-image: radial-gradient(circle at center, transparent 20%, #000 90%);
     mask-image: radial-gradient(circle at center, transparent 20%, #000 90%);
 }
 
-/* Círculo dourado decorativo (sol) */
+/* Círculo dourado decorativo (sol): 90% da menor dimensão da tela */
 main#home::after {
     content: "";
     position: absolute;
-    width: 24rem;
-    height: 24rem;
-    max-width: 120vw;
-    max-height: 120vw;
+    width: min(90vmin, 38rem);
+    height: min(90vmin, 38rem);
     border-radius: 50%;
-    border: 2px dashed rgba(242, 182, 50, 0.35);
+    border: 0.12rem dashed rgba(242, 182, 50, 0.35);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -181,7 +183,7 @@ main#home p {
 main#home h1 {
     font-family: var(--fonte-titulo);
     font-weight: 900;
-    font-size: clamp(2.6rem, 13vw, 4.8rem);
+    font-size: clamp(2.6rem, 13vw, 8rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
     background: linear-gradient(100deg, var(--ouro), var(--laranja) 50%, var(--ouro));
@@ -199,13 +201,13 @@ main#home h1::after {
     width: 8rem;
     height: 0.5rem;
     margin: 2rem auto 0;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     background: var(--faixa-kente);
 }
 
 main#home p {
-    max-width: 22ch;
-    font-size: 1.55rem;
+    max-width: min(100%, 30ch);
+    font-size: clamp(1.4rem, 5.2vw, 1.8rem);
     font-weight: 300;
     line-height: 1.5;
     color: var(--areia);
@@ -249,10 +251,10 @@ main#home p {
 .secao-tema h2 {
     font-family: var(--fonte-titulo);
     font-weight: 700;
-    font-size: clamp(1.9rem, 8.2vw, 2.8rem);
+    font-size: clamp(1.9rem, 8.2vw, 3.4rem);
     line-height: 1.2;
     text-align: center;
-    max-width: 100%;
+    width: min(100%, 26ch);
     margin: 0 auto 4rem;
     color: var(--marrom);
     text-wrap: balance;
@@ -269,20 +271,20 @@ main#home p {
     width: 6rem;
     height: 0.4rem;
     margin: 1.6rem auto 0;
-    border-radius: 3px;
+    border-radius: 0.2rem;
     background: linear-gradient(90deg, var(--terracota), var(--ouro), var(--verde));
 }
 
 /* ---------- Tópicos (integrados à página, sem cartões) ---------- */
 .bloco-conteudo {
-    max-width: 42rem;
+    width: min(100%, 48rem);
     margin: 0 auto;
     padding: 0 0 4rem;
 }
 
 .bloco-conteudo + .bloco-conteudo {
     padding-top: 4rem;
-    border-top: 1px solid rgba(74, 43, 26, 0.22);
+    border-top: 0.07rem solid rgba(74, 43, 26, 0.22);
 }
 
 .bloco-conteudo:last-child {
@@ -293,11 +295,12 @@ main#home p {
     border-top-color: rgba(242, 182, 50, 0.28);
 }
 
-/* Título do tópico (h3) — centralizado e ocupando ~70% da tela */
+/* Título do tópico (h3) — centralizado e ocupando ~70% da tela.
+   Em telas muito largas, o limite em rem evita que fique gigante. */
 .bloco-conteudo h3 {
     position: relative;
     display: block;
-    width: 70vw;
+    width: min(70vw, 32rem);
     max-width: 100%;
     margin: 0 auto 2.2rem;
     padding-bottom: 1.4rem;
@@ -319,7 +322,7 @@ main#home p {
     width: 5rem;
     height: 0.3rem;
     transform: translateX(-50%);
-    border-radius: 2px;
+    border-radius: 0.15rem;
     background: var(--ouro);
 }
 
@@ -368,7 +371,7 @@ footer p {
 @keyframes surgir {
     from {
         opacity: 0;
-        transform: translateY(28px);
+        transform: translateY(1.5rem);
     }
     to {
         opacity: 1;
@@ -393,23 +396,14 @@ footer p {
 }
 
 /* ==========================================================
-   TABLET — a partir de 600px
+   TELAS MÉDIAS (a partir de 37,5em ≈ tablet)
+   Só refinamentos de estilo; os tamanhos já são fluidos.
    ========================================================== */
-@media (min-width: 600px) {
-    :root {
-        --lateral: 2.5rem;
-        --espaco-secao: 6.5rem;
-        --altura-menu: 3.5rem;
-    }
-
-    html {
-        font-size: 106.25%; /* 17px */
-    }
-
+@media (min-width: 37.5em) {
     header {
         background: rgba(20, 13, 9, 0.88);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(0.75rem);
+        -webkit-backdrop-filter: blur(0.75rem);
     }
 
     nav {
@@ -422,78 +416,18 @@ footer p {
         text-transform: uppercase;
         padding: 0 1.1rem;
     }
-
-    main#home::after {
-        width: 36rem;
-        height: 36rem;
-    }
-
-    main#home h1 {
-        font-size: clamp(4.8rem, 11vw, 6.2rem);
-    }
-
-    main#home p {
-        max-width: 30ch;
-        font-size: 1.6rem;
-    }
-
-    .secao-tema h2 {
-        font-size: clamp(2.4rem, 5.5vw, 3rem);
-        max-width: 24ch;
-        margin-bottom: 4.5rem;
-    }
-
-    /* h3 deixa de usar 70% da tela e passa a ter largura própria */
-    .bloco-conteudo h3 {
-        width: auto;
-        max-width: 28rem;
-        font-size: 2.1rem;
-    }
-
-    .bloco-conteudo p {
-        font-size: 1.15rem;
-    }
 }
 
 /* ==========================================================
-   DESKTOP — a partir de 960px
+   TELAS GRANDES (a partir de 60em ≈ desktop)
    ========================================================== */
-@media (min-width: 960px) {
+@media (min-width: 60em) {
     :root {
-        --lateral: 4rem;
-        --espaco-secao: 7.5rem;
-    }
-
-    html {
-        font-size: 100%; /* 16px */
+        --lateral: 8vw;
     }
 
     nav a {
         font-size: 0.82rem;
-    }
-
-    main#home h1 {
-        font-size: clamp(6rem, 9vw, 8rem);
-    }
-
-    main#home p {
-        max-width: 36ch;
-        font-size: 1.7rem;
-    }
-
-    .secao-tema h2 {
-        max-width: 26ch;
-        font-size: 3.4rem;
-        margin-bottom: 5rem;
-    }
-
-    .bloco-conteudo {
-        max-width: 48rem;
-    }
-
-    .bloco-conteudo h3 {
-        font-size: 2.3rem;
-        max-width: 32rem;
     }
 
     .bloco-conteudo p {
@@ -504,14 +438,5 @@ footer p {
 
     footer {
         font-size: 0.85rem;
-    }
-}
-
-/* ==========================================================
-   TELAS GRANDES — a partir de 1400px
-   ========================================================== */
-@media (min-width: 1400px) {
-    .bloco-conteudo {
-        max-width: 52rem;
     }
 }
