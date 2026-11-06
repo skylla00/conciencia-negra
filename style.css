@@ -365,16 +365,6 @@ main#home p {
     border: 0;
 }
 
-.video-link {
-    margin-top: 1rem;
-    text-align: center;
-}
-
-.video-link a {
-    color: var(--ouro);
-    font-weight: 700;
-}
-
 /* ---------- Rodapé (compacto) ---------- */
 footer {
     position: relative;
